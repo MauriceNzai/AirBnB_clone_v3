@@ -5,9 +5,9 @@ index page of the API
 from api.v1.views import app_views
 from flask import jsonify, Blueprint
 from models.state import State
-from models import stroage
+from models import storage
 
-@app_views.route('/status', method=['GET'], strict_slashes=False)
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_status():
     """
     Returns the status of the API
@@ -15,7 +15,7 @@ def get_status():
     return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', method=['GET'], strict_slashes=False)
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def object_status():
     """
     Retrieves the number of each object by type
