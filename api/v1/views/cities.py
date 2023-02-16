@@ -11,7 +11,7 @@ from models.city import City
 
 @app_views.route('/states/<string:state_id>/cities',
                 methods=['Get', 'POST'], strict_slashes=False)
-def cities():
+def cities(state_id):
     """
     Creates City view to handle default RestFul API actions for the object
     """
@@ -53,6 +53,6 @@ def get_city(city_id):
             return jsonify({'error': 'Not a JSON'}), 400
         for key, value in put.items():
             if key not in ['id', 'created_at', 'updated_at']:
-                setattr(state, key, value)
+                setattr(city, key, value)
                 storage.save()
         return jsonify(city.to_dict()), 200
