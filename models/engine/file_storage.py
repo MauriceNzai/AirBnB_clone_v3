@@ -61,7 +61,7 @@ class FileStorage:
             if item.__class__ == cls and item.id == id:
                 return item
 
-    def count(self cls=None):
+    def count(self, cls=None):
         """
         Counts number of objects in storage
         Returns number on objects matching given name
@@ -71,7 +71,7 @@ class FileStorage:
             cls = classes.get(cls)
         if cls is None:
             return len(self.all())
-        return len(self.all(cls)
+        return len(self.all(cls))
 
     def reload(self):
         """deserializes the JSON file to __objects"""
