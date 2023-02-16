@@ -46,7 +46,7 @@ def get_amenity(amenity_id):
         return jsonify({}), 200
     elif request.method == 'PUT':
         put = request.get_json()
-        if put is None or type(pu) != dict:
+        if put is None or type(put) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
         for key, value in put.items():
             if key not in ['id', 'created_at', 'updated_at']:
