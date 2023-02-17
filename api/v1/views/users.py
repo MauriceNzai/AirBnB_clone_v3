@@ -14,11 +14,8 @@ def users():
     Creates User view to handle default RestFul API actions for the object
     """
     if request.method == 'GET':
-        all_users = []
-        users = storage.all('User').values()
-        for user in users:
-            all_users.append(user.to_json())
-        return jsonify(all_users)
+        return jsonify(
+                [val.to_dict() for val in storage.all('User').values()])
     elif request.method == 'POST':
         post = request.get_json()
         if post is None or type(post) != dict:
@@ -29,45 +26,30 @@ def users():
             return jsonify({'error': 'Missing password'}), 400
         new_user = User(**post)
         new_user.save()
-        new_user = user.to_json()
-        return jsonify(new_user), 201
+        return jsonify(new_user.to_dict()), 201
 
-@app_views.route('/users/<string:user_id>', methods=['GET'])
+@app_views.route('/users/<string:user_id>',
+                methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_user(user_id):
     """
-    Retrieves User object with specific id
+    Retrieves Amenity object with specific id
     """
     user = storage.get('User', user_id)
     if user is None:
         abort(404)
-    user = user.to_json()
-    return jsonify(user)
-
-@app_views.route('/users/<string:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    """
-    Deletes a User with given id
-    """
-    user = storage.get('User', user_id)
-    if user is None:
-        abort(404)
-    storage.delete(user)
-    storage.save()
-    return jsonify({}), 200
-
-@app_views.route('/users/<string:user_id>', methods=['PUT'])
-def new_user(user_id):
-    """
-    Adds new User object
-    """
-    new_user = storage.get('User', user_id)
-    if new_user is None:
-        abort(404)
-    data = request.get_json()
-    if data is None or type(data) != dict:
+    elif request.method == 'GET':
+        return jsonify(user.to_dict())
+    elif request.method == 'DELETE':
+        user = storage.get('User', user_id)
+        storage.delete(user)
+        storage.save()
+        return jsonify({}), 200
+    elif request.method == 'PUT':
+        put = request.get_json()
+        if put is None or type(put) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
-        for key, value in data.items():
-            if key not in ['id', 'email', 'created_at', 'updated_at']:
-                setattr(new_user, key, value)
-        new_user.save()
-        return jsonify(new_user.to_dict()), 200
+        for key, value in put.items():
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(user, key, value)
+                storage.save()
+        return jsonify(user.to_dict()), 200
