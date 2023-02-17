@@ -16,6 +16,7 @@ def places(city_id):
     Creates Place view to handle default RestFul API actions for the object
     """
     city = storage.get('City', city_id)
+    print(city)
     if state is None:
         abort(404)
     if request.method == 'GET':
