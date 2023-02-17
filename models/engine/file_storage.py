@@ -61,7 +61,7 @@ class FileStorage:
             if item.__class__ == cls and item.id == id:
                 return item
 
-    def count(self cls=None):
+    def count(self, cls=None):
         """
         Counts number of objects in storage
         Returns number on objects matching given name
