@@ -17,7 +17,7 @@ def places(city_id):
     """
     city = storage.get('City', city_id)
     print(city)
-    if state is None:
+    if city is None:
         abort(404)
     if request.method == 'GET':
         return jsonify(
