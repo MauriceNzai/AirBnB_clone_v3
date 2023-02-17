@@ -32,8 +32,8 @@ def places_reviews(place_id):
         elif storage.get('User', post.get('user_id')) is None:
             abort(404)
         new_review = Review(place_id=place_id, **post)
-        new_place.save()
-        return jsonify(new_place.to_dict()), 201
+        new_review.save()
+        return jsonify(new_review.to_dict()), 201
 
 @app_views.route('/reviews/<string:review_id>',
                 methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
