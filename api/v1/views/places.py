@@ -16,9 +16,9 @@ def places(city_id):
     Creates Place view to handle default RestFul API actions for the object
     """
     city = storage.get('City', city_id)
-    print(city)
     if city is None:
         abort(404)
+    print(city)
     if request.method == 'GET':
         return jsonify(
                     [val.to_dict() for val in city.places])
