@@ -28,8 +28,9 @@ def amenities():
         new_amenity.save()
         return jsonify(new_amenity.to_dict()), 201
 
+
 @app_views.route('/amenities/<string:amenity_id>',
-                methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+                 methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_amenity(amenity_id):
     """
     Retrieves Amenity object with specific id

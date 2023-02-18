@@ -10,7 +10,7 @@ from models.city import City
 
 
 @app_views.route('/states/<string:state_id>/cities',
-                methods=['Get', 'POST'], strict_slashes=False)
+                 methods=['Get', 'POST'], strict_slashes=False)
 def cities(state_id):
     """
     Creates City view to handle default RestFul API actions for the object
@@ -31,8 +31,9 @@ def cities(state_id):
         new_city.save()
         return jsonify(new_city.to_dict()), 201
 
+
 @app_views.route('/cities/<string:city_id>',
-                methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+                 methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_city(city_id):
     """
     Retrieves a City object with specific id

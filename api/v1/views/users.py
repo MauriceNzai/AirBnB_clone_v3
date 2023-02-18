@@ -28,8 +28,9 @@ def users():
         new_user.save()
         return jsonify(new_user.to_dict()), 201
 
+
 @app_views.route('/users/<string:user_id>',
-                methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+                 methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_user(user_id):
     """
     Retrieves Amenity object with specific id

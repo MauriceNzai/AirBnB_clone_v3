@@ -10,7 +10,7 @@ from models.city import City
 
 
 @app_views.route('/cities/<string:city_id>/places',
-                methods=['Get', 'POST'], strict_slashes=False)
+                 methods=['Get', 'POST'], strict_slashes=False)
 def places(city_id):
     """
     Creates Place view to handle default RestFul API actions for the object
@@ -36,8 +36,9 @@ def places(city_id):
         new_place.save()
         return jsonify(new_place.to_dict()), 201
 
+
 @app_views.route('/places/<string:place_id>',
-                methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+                 methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_place(place_id):
     """
     Retrieves a Place object with specific id
@@ -58,7 +59,7 @@ def get_place(place_id):
             return jsonify({'error': 'Not a JSON'}), 400
         for key, value in put.items():
             if key not in ['id', 'created_at',
-                            'updated_at', 'city_id', 'user_id']:
+                           'updated_at', 'city_id', 'user_id']:
                 setattr(place, key, value)
                 storage.save()
         return jsonify(place.to_dict()), 200

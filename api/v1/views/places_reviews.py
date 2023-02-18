@@ -10,7 +10,7 @@ from models.review import Review
 
 
 @app_views.route('/places/<string:place_id>/reviews',
-                methods=['Get', 'POST'], strict_slashes=False)
+                 methods=['Get', 'POST'], strict_slashes=False)
 def places_reviews(place_id):
     """
     Creates Review view to handle default RestFul API actions for the object
@@ -35,8 +35,9 @@ def places_reviews(place_id):
         new_review.save()
         return jsonify(new_review.to_dict()), 201
 
+
 @app_views.route('/reviews/<string:review_id>',
-                methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+                 methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_place_review(review_id):
     """
     Retrieves a Review object with specific id
@@ -57,7 +58,7 @@ def get_place_review(review_id):
             return jsonify({'error': 'Not a JSON'}), 400
         for key, value in put.items():
             if key not in ['id', 'created_at',
-                            'updated_at', 'place_id', 'user_id']:
+                           'updated_at', 'place_id', 'user_id']:
                 setattr(review, key, value)
                 storage.save()
         return jsonify(review.to_dict()), 200
