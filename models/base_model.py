@@ -66,9 +66,10 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        if new_dict.get('password') is not None and show_pswd is False:
-            del new_dict["password"]
         new_dict["__class__"] = self.__class__.__name__
+        if getenv("HBNB_TYPE_STORAGE") == "db":
+            if 'password' in new_dict:
+                del new_dict["password"]
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         return new_dict
