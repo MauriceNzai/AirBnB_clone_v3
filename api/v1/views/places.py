@@ -16,12 +16,11 @@ def places(city_id):
     Creates Place view to handle default RestFul API actions for the object
     """
     city = storage.get('City', city_id)
+    print(city)
     if city is None:
         abort(404)
-    print(city)
     if request.method == 'GET':
-        return jsonify(
-                    [val.to_dict() for val in city.places])
+        return jsonify([val.to_dict() for val in city.places])
     elif request.method == 'POST':
         post = request.get_json()
         if post is None or type(post) != dict:
@@ -40,11 +39,9 @@ def places(city_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_place(place_id):
-    """
-    Retrieves a Place object with specific id
-    """
+    """Retrieves a city object with a specific id"""
     place = storage.get('Place', place_id)
-    if city is None:
+    if place is None:
         abort(404)
     elif request.method == 'GET':
         return jsonify(place.to_dict())
@@ -58,8 +55,8 @@ def get_place(place_id):
         if put is None or type(put) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
         for key, value in put.items():
-            if key not in ['id', 'created_at',
-                           'updated_at', 'city_id', 'user_id']:
+            if key not in ['id', 'created_at', 'updated_at',
+                           'city_id', 'user_id']:
                 setattr(place, key, value)
                 storage.save()
         return jsonify(place.to_dict()), 200
