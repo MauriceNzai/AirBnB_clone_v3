@@ -13,7 +13,6 @@ import os
 
 @app_views.route('/places/<string:place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
-@swag_from('documentation/place_amenity/get_id.yml', methods=['GET'])
 def get_amenities(place_id):
     """ retrieves all amenities from a place """
     place = storage.get(Place, place_id)
@@ -42,7 +41,6 @@ def delete_amenity(place_id, amenity_id):
 
 @@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['POST'], strict_slashes=False)
-@swag_from('documentation/place_amenity/post.yml', methods=['POST'])
 def post_amenity2(place_id, amenity_id):
     """ post amenity by id """
     place = storage.get(Place, place_id)
