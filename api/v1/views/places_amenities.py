@@ -8,29 +8,26 @@ from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
 from models.place import Placce
-from os import getenv
+import os
 
 
 @app_views.route('/places/<string:place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/place_amenity/get_id.yml', methods=['GET'])
 def get_amenities(place_id):
-    """
-    Display list of all amenities in a place
-    """
-    place = storage.get('Place', place_id)
+    """ retrieves all amenities from a place """
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    amenities = [amen.to_dict() for amen in place.amenities]
+    amenities = [obj.to_dict() for obj in place.amenities]
     return jsonify(amenities)
 
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_amenity(place_id, amenity_id):
-    """
-    Deletes given amenity from a place
-    """
-    place = storage.get('Place', place_id)
+    """ delete amenity from place """
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     amenity = storage.get(Amenity, amenity_id)
